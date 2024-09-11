@@ -8,14 +8,14 @@ st.text("Recuerda que debes seguir las reglas para inscribirte correctamente.")
 with st.form(key="form"):
     st.header("Identificación del estudiante")
 
-    name = st.text_input("Ingresa tu nombre completo", value="Nombre Completo")
+    name = st.text_input("Ingresa tu nombre completo", placeholder="Nombre Completo")
     st.caption("Ejemplo: Francisca Alejandra Pérez Ortiz")
-    run = st.text_input("Ingresa tu RUN", value="12345678-k")
+    run = st.text_input("Ingresa tu RUN", placeholder="12345678-k")
     st.caption("Debes ingresar el RUN de tu curso. Ej.: XX.XXX.XXX-X")
 
     email = st.text_input(
         "Ingresa tu email",
-        value="nombre.apellido@estudiantes.colegiotgs.cl",
+        placeholder="nombre.apellido@estudiantes.colegiotgs.cl",
     )
     st.caption("Si tu correo es apellido.nombre también es válido")
     curso = st.radio("Selecciona tu curso", ["III GREEN", "III BLUE"])
