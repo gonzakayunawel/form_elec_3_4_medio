@@ -49,7 +49,11 @@ def validate_elective_availability(
     # Definir una función para validar si el electivo de formación general tiene cupo4
 
 
-def validate_elective_availability_fg(electivo_fg: str, curso: str, availavity: int, ):
+def validate_elective_availability_fg(
+    electivo_fg: str,
+    curso: str,
+    availavity: int,
+):
     conn = sqlite3.connect("form_app.db")
     cursor = conn.cursor()
 
@@ -68,7 +72,9 @@ def validate_elective_availability_fg(electivo_fg: str, curso: str, availavity: 
     finally:
         conn.close()
 
+
 # Validar que el run se relacione al email
+
 
 def validate_run_email(run: str, email: str, table_name="users_register"):
     conn = sqlite3.connect("form_app.db")
@@ -138,14 +144,16 @@ def validate_form(
                 "Debes seleccionar el electivo de formación general"
             )  # verificar si el electivo FG ha sido seleccionado
         elif not validate_run_email(run, email, table_name="emails"):
-            st.error("El RUN o email no se corresponden con el usuario registrado. Verifca que tu RUN y correo electrónico sean correctos.")
+            st.error(
+                "El RUN o email no se corresponden con el usuario registrado. Verifca que tu RUN y correo electrónico sean correctos."
+            )
 
         else:
             if verify_email(email, table="users_register"):
                 st.error(
-                    "El email ya está en uso"
+                    "El email ingresado ya fué registrado"
                 )  # verificar si el email ya está en la base de datos de inscripciones
-    
+
             elif not validate_electivos(electivo_1, electivo_2, electivo_3):
                 st.error(
                     "Los electivos no pueden ser los 3 de la misma área"
@@ -175,7 +183,9 @@ def validate_form(
             elif not validate_elective_availability_fg(
                 electivo_fg, curso, cupos_electivos_fg
             ):
-                st.error(f"Error. Electivo: {electivo_fg} sin cupo para el curso: {curso}.")
+                st.error(
+                    f"Error. Electivo: {electivo_fg} sin cupo para el curso: {curso}."
+                )
 
             else:
                 if insert_user_record(

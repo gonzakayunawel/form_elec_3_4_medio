@@ -26,7 +26,7 @@ with st.form(key="form"):
     st.caption("Ejemplo: francisca.perez@estudiantes.colegiotgs.cl")
     # Curso
     listado_cursos = ["III GREEN", "III BLUE"]
-    curso = st.radio("Selecciona tu curso", listado_cursos)
+    curso = st.radio("Selecciona tu curso", listado_cursos, index=None)
 
     st.divider()
 
@@ -44,6 +44,7 @@ with st.form(key="form"):
     electivo_1 = st.radio(
         "Selecciona el Electivo 1",
         listado_electivos_1,
+        index=None,
     )
 
     # Electivo 2
@@ -57,6 +58,7 @@ with st.form(key="form"):
     electivo_2 = st.radio(
         "Selecciona el Electivo 2",
         listado_electivos_2,
+        index=None,
     )
 
     # Electivo 3
@@ -69,6 +71,7 @@ with st.form(key="form"):
     electivo_3 = st.radio(
         "Selecciona el Electivo 3",
         listado_electivos_3,
+        index=None,
     )
 
     st.divider()
@@ -83,6 +86,7 @@ with st.form(key="form"):
     electivo_fg = st.radio(
         "Selecciona el Electivo de Formación General",
         listado_electivos_fg,
+        index=None,
     )
     submit_button = st.form_submit_button(label="Enviar")
 
