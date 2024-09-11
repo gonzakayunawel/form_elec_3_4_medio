@@ -1,2 +1,6 @@
 .venv/
 db_manager.py
+db_manager.ipynb
+form_app.db
+correos.xlsx
+Control_Electricos.csv
