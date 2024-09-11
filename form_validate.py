@@ -1,9 +1,9 @@
 import streamlit as st
 import re
-from control_form import verify_email, insert_user
+from control_form import verify_email, insert_user_record
 
 # Definir la expresión regular para un RUN chileno
-run_regex = r'^\d{7,8}-[\dKk]$'
+run_regex = r"^\d{7,8}-[\dKk]$"
 
 # Compilar la expresión regular
 pattern_run = re.compile(run_regex)
@@ -13,7 +13,10 @@ pattern_run = re.compile(run_regex)
 def is_valid_run(run):
     return bool(pattern_run.fullmatch(run))
 
-def validate_form(name, run, email, curso, electivo_1, electivo_2, electivo_3, electivo_fg):
+
+def validate_form(
+    name, run, email, curso, electivo_1, electivo_2, electivo_3, electivo_fg
+):
     if run and not is_valid_run(run):
         st.error("RUN no válido")
     elif email and not verify_email(email):
@@ -36,7 +39,21 @@ def validate_form(name, run, email, curso, electivo_1, electivo_2, electivo_3, e
         elif not electivo_fg:
             st.error("Debes seleccionar el electivo de formación general")
         else:
-            if insert_user(name, run, email, curso, electivo_1, electivo_2, electivo_3, electivo_fg):
-                return True
+            if verify_email(email):
+                if verify_email(email, table="users_register"):
+                    st.error("El email ya está se inscribió.")
+                else:
+
+                    insert_user_record(
+                        name,
+                        run,
+                        email,
+                        curso,
+                        electivo_1,
+                        electivo_2,
+                        electivo_3,
+                        electivo_fg,
+                    )
+                    return True
             else:
-                st.error("Error al enviar el formulario. Inteéntalo de nuevo.")
+                st.error("El email no es válido.")

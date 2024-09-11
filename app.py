@@ -1,5 +1,6 @@
 import streamlit as st
 from form_validate import validate_form
+from control_form import verify_email
 
 st.title("Formulario de Inscripción de Electivos - 2024")
 st.text("Recuerda que debes seguir las reglas para inscribirte correctamente.")
@@ -16,7 +17,7 @@ with st.form(key="form"):
         "Ingresa tu email",
         value="nombre.apellido@estudiantes.colegiotgs.cl",
     )
-    st.caption('Si tu correo es apellido.nombre también es válido')
+    st.caption("Si tu correo es apellido.nombre también es válido")
     curso = st.radio("Selecciona tu curso", ["III GREEN", "III BLUE"])
 
     st.divider()
@@ -38,7 +39,7 @@ with st.form(key="form"):
             "Área A: Taller de literatura",
             "Área B: Biología celular y molecular",
             "Área B: Pensamiento computacional y programación",
-            "Área C: Artes visuales, audiovisuales y multimediales"
+            "Área C: Artes visuales, audiovisuales y multimediales",
         ],
     )
 
@@ -47,7 +48,7 @@ with st.form(key="form"):
         [
             "Área A: Lectura y escritura especializada",
             "Área B: Química",
-            "Área C: Ciencias del ejercicio físico y deportivo"
+            "Área C: Ciencias del ejercicio físico y deportivo",
         ],
     )
 
@@ -57,13 +58,12 @@ with st.form(key="form"):
 
     electivo_fg = st.radio(
         "Selecciona el Electivo de Formación General",
-        [
-            "Historia, Geografía y Cs. Sociales",
-            "Artes Visuales"
-        ],
+        ["Historia, Geografía y Cs. Sociales", "Artes Visuales"],
     )
-    submit_button = st.form_submit_button(label='Enviar')
+    submit_button = st.form_submit_button(label="Enviar")
 
 if submit_button:
-    if validate_form(name, run, email, curso, electivo_1, electivo_2, electivo_3, electivo_fg):
+    if validate_form(
+        name, run, email, curso, electivo_1, electivo_2, electivo_3, electivo_fg
+    ):
         st.success("Gracias por enviar el formulario")
