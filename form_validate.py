@@ -93,6 +93,31 @@ def validate_run_email(run: str, email: str, table_name="users_register"):
     finally:
         conn.close()
 
+# Verificar si alguno de los electivos ya fue realizado en el año anterior
+
+def verify_electivo_prior_year(run: str, electivo: str):
+
+    run = run.replace("-", "")
+
+    conn = sqlite3.connect("form_app.db")
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute(
+            f"SELECT run, electivo_1, electivo_2, electivo_3 FROM listado_electivos_2024_3_medio WHERE run = ?",
+            (run,),
+        )
+        result = cursor.fetchone()
+        if result:
+            if electivo in list(result[1:]):
+                return True
+            else:
+                return False
+    except Exception as e:
+        raise e
+    finally:
+        conn.close()
+
 
 # Cupos formación diferenciada
 cupos_electivos = 5
@@ -186,7 +211,18 @@ def validate_form(
                 st.error(
                     f"Error. Electivo: {electivo_fg} sin cupo para el curso: {curso}."
                 )
-
+            elif not verify_electivo_prior_year(run, electivo_1):
+                st.error(
+                    f"Error. El electivo {electivo_1} ya fue realizado en el año anterior."
+                )
+            elif not verify_electivo_prior_year(run, electivo_2):
+                st.error(
+                    f"Error. El electivo {electivo_2} ya fue realizado en el año anterior."
+                )
+            elif not verify_electivo_prior_year(run, electivo_3):
+                st.error(
+                    f"Error. El electivo {electivo_3} ya fue realizado en el año anterior."
+                )
             else:
                 if insert_user_record(
                     name,
