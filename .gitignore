@@ -5,3 +5,5 @@ form_app.db
 correos.xlsx
 Control_Electricos.csv
 __pycache__/
+.env
+.vscode/

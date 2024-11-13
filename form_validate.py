@@ -98,6 +98,7 @@ def validate_run_email(run: str, email: str, table_name="users_register"):
 def verify_electivo_prior_year(run: str, electivo: str):
 
     run = run.replace("-", "")
+    electivo_cleaned = electivo[8:]
 
     conn = sqlite3.connect("form_app.db")
     cursor = conn.cursor()
@@ -109,10 +110,12 @@ def verify_electivo_prior_year(run: str, electivo: str):
         )
         result = cursor.fetchone()
         if result:
-            if electivo in list(result[1:]):
+            if electivo_cleaned in list(result[1:]):
                 return True
             else:
                 return False
+        else:
+            return False
     except Exception as e:
         raise e
     finally:
@@ -120,10 +123,10 @@ def verify_electivo_prior_year(run: str, electivo: str):
 
 
 # Cupos formación diferenciada
-cupos_electivos = 5
+cupos_electivos = 10
 
 # Cupos formación general
-cupos_electivos_fg = 5
+cupos_electivos_fg = 10
 
 
 def validate_form(
@@ -138,33 +141,24 @@ def validate_form(
             "El email ingresado no es válido o no es un email habilitado para inscribirse"
         )
     else:
-        if not name:
-            st.error(
-                "Debes ingresar el nombre completo"
-            )  # verificar si el nombre ha sio ingresado
-        elif not run:
-            st.error("Debes ingresar el RUN")  # verificar si el RUN ha sido ingresado
-        elif not email:
-            st.error(
-                "Debes ingresar tu email"
-            )  # verificar si el email ha sido ingresado
-        elif not curso:
-            st.error(
-                "Debes seleccionar tu curso"
-            )  # verificar si el curso ha sido seleccionado
-        elif not electivo_1:
-            st.error(
-                "Debes seleccionar el electivo 1"
-            )  # verificar si el electivo 1 ha sido seleccionado
-        elif not electivo_2:
-            st.error(
-                "Debes seleccionar el electivo 2"
-            )  # verificar si el electivo 2 ha sido seleccionado
-        elif not electivo_3:
-            st.error(
-                "Debes seleccionar el electivo 3"
-            )  # verificar si el electivo 3 ha sido seleccionado
-        elif not electivo_fg:
+        # Diccionario que mapea las variables a sus respectivos mensajes de error
+        form_fields = {
+            "name": "Debes ingresar el nombre completo",
+            "run": "Debes ingresar el RUN",
+            "email": "Debes ingresar tu email",
+            "curso": "Debes seleccionar tu curso",
+            "electivo_1": "Debes seleccionar el electivo 1",
+            "electivo_2": "Debes seleccionar el electivo 2",
+            "electivo_3": "Debes seleccionar el electivo 3",
+            "electivo_fg": "Debes seleccionar el electivo de formación general",
+        }
+
+        # Verificar cada campo en el diccionario
+        for field, menssage in form_fields.items():
+            if not locals()[field]:  # `locals()` permite obtener el valor de la variable por nombre
+                st.error(menssage)
+                break  # Salir del bucle después de mostrar el primer error encontrado
+        if not electivo_fg:
             st.error(
                 "Debes seleccionar el electivo de formación general"
             )  # verificar si el electivo FG ha sido seleccionado
@@ -176,7 +170,7 @@ def validate_form(
         else:
             if verify_email(email, table="users_register"):
                 st.error(
-                    "El email ingresado ya fué registrado"
+                    "El email ingresado ya fue registrado"
                 )  # verificar si el email ya está en la base de datos de inscripciones
 
             elif not validate_electivos(electivo_1, electivo_2, electivo_3):
@@ -211,15 +205,15 @@ def validate_form(
                 st.error(
                     f"Error. Electivo: {electivo_fg} sin cupo para el curso: {curso}."
                 )
-            elif not verify_electivo_prior_year(run, electivo_1):
+            elif verify_electivo_prior_year(run, electivo_1):
                 st.error(
                     f"Error. El electivo {electivo_1} ya fue realizado en el año anterior."
                 )
-            elif not verify_electivo_prior_year(run, electivo_2):
+            elif verify_electivo_prior_year(run, electivo_2):
                 st.error(
                     f"Error. El electivo {electivo_2} ya fue realizado en el año anterior."
                 )
-            elif not verify_electivo_prior_year(run, electivo_3):
+            elif verify_electivo_prior_year(run, electivo_3):
                 st.error(
                     f"Error. El electivo {electivo_3} ya fue realizado en el año anterior."
                 )

@@ -16,7 +16,7 @@ with st.form(key="form"):
     # RUN
     run = st.text_input("Ingresa tu RUN", placeholder="12345678-k")
     st.caption(
-        "Debes ingresar tu run sin puntos y con dígito verificador. Ej.: 11222333-X"
+        "Debes ingresar tu run sin puntos, con guión y dígito verificador. Ej.: 11222333-X"
     )
     # Email
     email = st.text_input(
@@ -25,7 +25,7 @@ with st.form(key="form"):
     )
     st.caption("Ejemplo: francisca.perez@estudiantes.colegiotgs.cl")
     # Curso
-    listado_cursos = ["III GREEN", "III BLUE"]
+    listado_cursos = ["2º medio G", "2º medio B"]
     curso = st.radio("Selecciona tu curso", listado_cursos, index=None)
 
     st.divider()
@@ -66,7 +66,7 @@ with st.form(key="form"):
     listado_electivos_3 = [
         "Área A: Lectura y escritura especializada",
         "Área B: Química",
-        "Área C: Ciencias del ejercicio físico y deportivo",
+        "Área C: Ciencias del Ejercicio Físico y Deportivo",
     ]
     electivo_3 = st.radio(
         "Selecciona el Electivo 3",
@@ -95,4 +95,4 @@ if submit_button:
     if validate_form(
         name, run, email, curso, electivo_1, electivo_2, electivo_3, electivo_fg
     ):
-        st.success("Gracias por enviar el formulario")
+        st.success("Tu inscripción ha sido exitosa. Puedes tomar una captura para tener un respaldo de tu inscripción o esperar a tu inscripción en papel.")
