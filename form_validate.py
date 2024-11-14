@@ -151,7 +151,7 @@ def validate_elective_availability_fg(electivo_seleccionado: str, curso: str, cu
         bool: True si hay cupos disponibles, False en caso contrario
     """
     try:
-        response = requests.get(f"{API_URL}/check_elective_class_availability_fg/{electivo_seleccionado}/{curso}/{cupos_electivos_fg}")
+        response = requests.get(f"{API_URL}/check_ge_elective_class_availability/{electivo_seleccionado}/{curso}/{cupos_electivos_fg}")
         response.raise_for_status()
         data = response.json()
 
