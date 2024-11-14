@@ -2,8 +2,8 @@ import streamlit as st
 import re
 import requests
 
-# API_URL = st.secrets["API_URL"]
-API_URL = st.secrets["LOCAL_API_URL"]
+API_URL = st.secrets["API_URL"]
+# API_URL = st.secrets["LOCAL_API_URL"]
 CUPO_ELECTIVO = int(st.secrets["CUPOS"])
 
 
