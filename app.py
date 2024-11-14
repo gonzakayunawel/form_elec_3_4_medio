@@ -39,8 +39,7 @@ with st.form(key="form"):
     st.caption("Ejemplo: francisca.perez@estudiantes.colegiotgs.cl")
 
     # Curso
-    listado_cursos = CURSOS
-    curso = st.radio("Selecciona tu curso", listado_cursos, index=None)
+    curso = st.radio("Selecciona tu curso", CURSOS, index=None)
 
     # --- Sección de inscripción Formación Diferenciada ---
     st.divider()
